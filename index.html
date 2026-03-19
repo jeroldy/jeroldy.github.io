@@ -91,37 +91,40 @@ img.pfp {
     margin-bottom: 10px;
 }
 
-/* LINKS */
+/* LINKS - Updated to 0.25 transparency */
 .links a {
     display: block;
     margin: 10px auto;
     padding: 12px;
     width: 220px;
-    background: rgba(255,255,255,0.1);
+    /* Matching the player bar: Dark forest green at 0.25 opacity */
+    background: rgba(10, 25, 10, 0.25); 
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(150, 200, 150, 0.15); /* Subtle border */
     border-radius: 12px;
     text-decoration: none;
     color: white;
-    transition: 0.2s;
+    transition: 0.3s ease;
 }
 
 .links a:hover {
-    background: rgba(255,255,255,0.3);
+    background: rgba(150, 255, 150, 0.2); /* Light green tint on hover */
     transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(150, 255, 150, 0.2); /* Y2K Glow */
 }
 
-/* --- Y2K 141 & Nature Aesthetic Media Player --- */
+/* PLAYER BAR - Updated to 0.25 transparency */
 #player-bar {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 90px;
-    /* Lowered from 0.92 to 0.5 for transparency */
+    /* Synced with buttons: 0.25 opacity */
     background: rgba(10, 25, 10, 0.25); 
-    /* Lowered blur to make the background video more visible */
-    backdrop-filter: blur(5px); 
-    -webkit-backdrop-filter: blur(5px);
-    
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border-top: 1px solid rgba(150, 200, 150, 0.2);
     display: flex;
     align-items: center;
@@ -129,7 +132,7 @@ img.pfp {
     padding: 0 30px;
     box-sizing: border-box;
     z-index: 5;
-    box-shadow: 0 -5px 15px rgba(100, 255, 100, 0.05);
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
 }
 
 .track-info {
