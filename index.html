@@ -14,13 +14,15 @@ body {
     background-color: black;
 }
 
-/* Background video */
+/* Background video - Starts Blurred */
 video {
     position: fixed;
     width: 100%;
     height: 100%;
     object-fit: cover;
     z-index: -2;
+    filter: blur(15px);
+    transition: filter 1.5s ease;
 }
 
 /* Dark overlay */
@@ -91,17 +93,16 @@ img.pfp {
     margin-bottom: 10px;
 }
 
-/* LINKS - Updated to 0.25 transparency */
+/* LINKS - 0.25 transparency */
 .links a {
     display: block;
     margin: 10px auto;
     padding: 12px;
     width: 220px;
-    /* Matching the player bar: Dark forest green at 0.25 opacity */
     background: rgba(10, 25, 10, 0.25); 
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(150, 200, 150, 0.15); /* Subtle border */
+    border: 1px solid rgba(150, 200, 150, 0.15); 
     border-radius: 12px;
     text-decoration: none;
     color: white;
@@ -109,19 +110,18 @@ img.pfp {
 }
 
 .links a:hover {
-    background: rgba(150, 255, 150, 0.2); /* Light green tint on hover */
+    background: rgba(150, 255, 150, 0.2); 
     transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(150, 255, 150, 0.2); /* Y2K Glow */
+    box-shadow: 0 0 15px rgba(150, 255, 150, 0.2); 
 }
 
-/* PLAYER BAR - Updated to 0.25 transparency */
+/* PLAYER BAR - 0.25 transparency */
 #player-bar {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 90px;
-    /* Synced with buttons: 0.25 opacity */
     background: rgba(10, 25, 10, 0.25); 
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
@@ -132,149 +132,28 @@ img.pfp {
     padding: 0 30px;
     box-sizing: border-box;
     z-index: 5;
-    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
 }
 
-.track-info {
-    display: flex;
-    align-items: center;
-    width: 30%;
-}
+.track-info { display: flex; align-items: center; width: 30%; }
+.album-art { width: 65px; height: 65px; border-radius: 8px; margin-right: 18px; }
+.track-text h4 { margin: 0; font-size: 1.1rem; text-shadow: 0 0 5px rgba(150, 255, 150, 0.5); }
+.track-text p { margin: 0; font-size: 0.85rem; color: #a3bca3; }
 
-.album-art {
-    width: 65px;
-    height: 65px;
-    border-radius: 8px; /* Slightly more rounded */
-    margin-right: 18px;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-}
+.player-controls { display: flex; flex-direction: column; align-items: center; width: 40%; }
+.buttons { display: flex; align-items: center; gap: 25px; margin-bottom: 8px; }
+.control-btn { cursor: pointer; font-size: 1.3rem; opacity: 0.75; color: #e0eee0; transition: 0.2s; }
+.control-btn:hover { opacity: 1; color: #aaffaa; transform: scale(1.08); }
 
-.track-text h4 {
-    margin: 0;
-    font-size: 1.1rem;
-    /* Subtle neon green glow on text */
-    text-shadow: 0 0 5px rgba(150, 255, 150, 0.5);
-}
+.progress-container { width: 100%; display: flex; align-items: center; gap: 12px; }
+.progress-bar { flex-grow: 1; height: 5px; background: rgba(100, 120, 100, 0.4); border-radius: 3px; position: relative; cursor: pointer; }
+#progress { width: 0%; height: 100%; background: #ccffcc; border-radius: 3px; box-shadow: 0 0 10px rgba(150, 255, 150, 0.6); }
+.time { font-size: 0.75rem; color: #a3bca3; min-width: 35px; }
 
-.track-text p {
-    margin: 0;
-    font-size: 0.85rem;
-    color: #a3bca3; /* Desaturated, organic green-grey */
-}
-
-.player-controls {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 40%;
-}
-
-.buttons {
-    display: flex;
-    align-items: center;
-    gap: 25px;
-    margin-bottom: 8px;
-}
-
-.control-btn {
-    cursor: pointer;
-    font-size: 1.3rem;
-    opacity: 0.75;
-    color: #e0eee0; /* Off-white, soft nature feel */
-    transition: 0.2s;
-}
-
-.control-btn:hover {
-    opacity: 1;
-    color: #aaffaa; /* Bright pale green on hover */
-    transform: scale(1.08);
-}
-
-.progress-container {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.progress-bar {
-    flex-grow: 1;
-    height: 5px; /* Slightly thicker for better visibility */
-    background: rgba(100, 120, 100, 0.4); /* Muted green track */
-    border-radius: 3px;
-    position: relative;
-    cursor: pointer;
-}
-
-#progress {
-    width: 0%;
-    height: 100%;
-    background: #ccffcc; /* Pale, soft green progress */
-    border-radius: 3px;
-    /* Glow for progress bar */
-    box-shadow: 0 0 10px rgba(150, 255, 150, 0.6);
-}
-
-.time {
-    font-size: 0.75rem;
-    color: #a3bca3;
-    min-width: 35px;
-}
-
-/* --- Clean Volume Slider --- */
-.volume-section {
-    width: 30%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 10px;
-}
-
-#volume-slider {
-    -webkit-appearance: none; /* Remove default styling */
-    appearance: none;
-    width: 100px;
-    height: 4px;
-    background: rgba(100, 120, 100, 0.4);
-    border-radius: 2px;
-    outline: none;
-    cursor: pointer;
-}
-
-/* Slider handle (thumb) styling */
-#volume-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 12px;
-    height: 12px;
-    background: #ccffcc;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 0 8px rgba(150, 255, 150, 0.8);
-    transition: 0.2s;
-}
-
-#volume-slider::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
-    background: #ffffff;
-}
-
-/* For Firefox */
-#volume-slider::-moz-range-thumb {
-    width: 12px;
-    height: 12px;
-    background: #ccffcc;
-    border-radius: 50%;
-    cursor: pointer;
-    border: none;
-    box-shadow: 0 0 8px rgba(150, 255, 150, 0.8);
-}
-
-#mute-icon {
-    font-size: 1.1rem;
-    color: #a3bca3;
-    cursor: pointer;
-}
+/* VOLUME SLIDER */
+.volume-section { width: 30%; display: flex; justify-content: flex-end; align-items: center; gap: 10px; }
+#volume-slider { -webkit-appearance: none; appearance: none; width: 100px; height: 4px; background: rgba(100, 120, 100, 0.4); border-radius: 2px; outline: none; cursor: pointer; }
+#volume-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 12px; height: 12px; background: #ccffcc; border-radius: 50%; cursor: pointer; box-shadow: 0 0 8px rgba(150, 255, 150, 0.8); }
+#mute-icon { font-size: 1.1rem; color: #a3bca3; cursor: pointer; }
 
 </style>
 </head>
@@ -283,7 +162,7 @@ img.pfp {
 
 <div id="enter">click to enter</div>
 
-<video autoplay muted loop>
+<video id="bgVideo" autoplay muted loop>
     <source src="ssstik.io_@bob305890_1773894028146.mp4" type="video/mp4">
 </video>
 
@@ -333,72 +212,51 @@ img.pfp {
     </div>
 </div>
 
-<audio id="music" loop>
+<audio id="music" loop crossOrigin="anonymous">
     <source src="242326090.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 const enter = document.getElementById("enter");
 const music = document.getElementById("music");
+const bgVideo = document.getElementById("bgVideo");
 const playPause = document.getElementById("playPause");
 const container = document.getElementById("main");
 const progressBar = document.getElementById("progress");
-const currTimeTxt = document.getElementById("current-time");
-const durationTxt = document.getElementById("duration");
 const volumeSlider = document.getElementById("volume-slider");
 const muteIcon = document.getElementById("mute-icon");
 
-let fadeInterval;
+let audioCtx, lowPassFilter, source;
 let isPaused = false;
-let previousVolume = 0.3; // Default volume for unmute
 
-/* --- AUDIO FADE LOGIC --- */
-function fadeAudio(targetVolume) {
-    clearInterval(fadeInterval);
-    const step = 0.05;
-    const speed = 50;
-
-    fadeInterval = setInterval(() => {
-        if (music.volume < targetVolume) {
-            music.volume = Math.min(music.volume + step, targetVolume);
-        } else if (music.volume > targetVolume) {
-            music.volume = Math.max(music.volume - step, targetVolume);
-        }
-        // Update slider position with the fade
-        volumeSlider.value = music.volume;
-        updateMuteIcon(music.volume);
-
-        if (music.volume === targetVolume) clearInterval(fadeInterval);
-    }, speed);
+// Setup the Audio Web API for the muffle effect
+function initAudio() {
+    if (audioCtx) return;
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    source = audioCtx.createMediaElementSource(music);
+    lowPassFilter = audioCtx.createBiquadFilter();
+    lowPassFilter.type = "lowpass";
+    lowPassFilter.frequency.value = 400; // Start muffled (low frequency)
+    source.connect(lowPassFilter);
+    lowPassFilter.connect(audioCtx.destination);
 }
-
-/* --- TAB VISIBILITY --- */
-document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "hidden") {
-        // Just pause for tab switch, it's less jarring than a fade
-        music.pause();
-    } else {
-        if (enter.style.display === "none" && !isPaused) {
-            // User returned, resume if it was playing
-            music.play();
-            // Ensure volume is correct on return
-            music.volume = volumeSlider.value;
-        }
-    }
-});
 
 /* --- ENTER SCREEN --- */
 enter.addEventListener("click", () => {
+    initAudio();
+    
+    // Smoothly clear audio frequency and video blur
+    lowPassFilter.frequency.setTargetAtTime(20000, audioCtx.currentTime, 0.5);
+    bgVideo.style.filter = "blur(0px)";
+
     enter.style.opacity = "0";
-    enter.style.backdropFilter = "blur(0px)";
     setTimeout(() => { enter.style.display = "none"; }, 800);
-    // Set initial volume from the slider
+
     music.volume = volumeSlider.value;
     music.play();
-    // No fade here, user is expecting music after the 'click'
 });
 
-/* --- PLAY/PAUSE TOGGLE --- */
+/* --- PLAY/PAUSE --- */
 playPause.addEventListener("click", () => {
     if (music.paused) {
         music.play();
@@ -411,42 +269,37 @@ playPause.addEventListener("click", () => {
     }
 });
 
-/* --- VOLUME SLIDER & MUTE LOGIC --- */
+/* --- VOLUME SLIDER --- */
 volumeSlider.addEventListener("input", (e) => {
-    const volume = e.target.value;
-    music.volume = volume;
-    updateMuteIcon(volume);
-    // If user interacts with volume, cancel any ongoing fade
-    clearInterval(fadeInterval); 
-});
-
-muteIcon.addEventListener("click", () => {
-    if (music.volume > 0) {
-        previousVolume = music.volume;
-        fadeAudio(0);
-    } else {
-        fadeAudio(previousVolume);
-    }
+    music.volume = e.target.value;
+    updateMuteIcon(e.target.value);
 });
 
 function updateMuteIcon(volume) {
-    if (volume == 0) {
-        muteIcon.innerText = "🔇";
-    } else if (volume < 0.5) {
-        muteIcon.innerText = "🔉";
-    } else {
-        muteIcon.innerText = "🔊";
-    }
+    if (volume == 0) muteIcon.innerText = "🔇";
+    else if (volume < 0.5) muteIcon.innerText = "🔉";
+    else muteIcon.innerText = "🔊";
 }
 
-/* --- PROGRESS BAR LOGIC --- */
+/* --- TAB VISIBILITY (Re-muffle on hide) --- */
+document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") {
+        if (lowPassFilter) lowPassFilter.frequency.value = 400;
+    } else {
+        if (enter.style.display === "none" && !isPaused) {
+            lowPassFilter.frequency.setTargetAtTime(20000, audioCtx.currentTime, 0.5);
+        }
+    }
+});
+
+/* --- PROGRESS BAR --- */
 music.addEventListener("timeupdate", () => {
     const curr = music.currentTime;
     const dur = music.duration;
     if (dur) {
         progressBar.style.width = (curr / dur) * 100 + "%";
-        currTimeTxt.innerText = formatTime(curr);
-        durationTxt.innerText = formatTime(dur);
+        document.getElementById("current-time").innerText = formatTime(curr);
+        document.getElementById("duration").innerText = formatTime(dur);
     }
 });
 
@@ -468,18 +321,15 @@ function type() {
 }
 type();
 
-/* --- SMOOTH PARALLAX --- */
+/* --- PARALLAX --- */
 let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
-const friction = 0.08; 
-
 document.addEventListener("mousemove", (e) => {
     targetX = (window.innerWidth / 2 - e.clientX) / 20;
     targetY = (window.innerHeight / 2 - e.clientY) / 20;
 });
-
 function animateParallax() {
-    currentX += (targetX - currentX) * friction;
-    currentY += (targetY - currentY) * friction;
+    currentX += (targetX - currentX) * 0.08;
+    currentY += (targetY - currentY) * 0.08;
     container.style.transform = `rotateY(${currentX}deg) rotateX(${currentY}deg)`;
     requestAnimationFrame(animateParallax);
 }
