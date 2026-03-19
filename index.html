@@ -52,25 +52,31 @@ video {
     transition: opacity 0.8s ease, backdrop-filter 0.8s ease;
 }
 
-/* MAIN CONTAINER (WITH PERSPECTIVE FOR 3D TILT) */
+/* MAIN CONTAINER (FIXED ALIGNMENT) */
 .wrapper {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     display: flex;
-    justify(content): center;
-    align-items: center;
+    justify-content: center; /* Centers horizontally */
+    align-items: center;     /* Centers vertically */
     perspective: 1000px;
 }
 
 .container {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     will-change: transform;
 }
 
 /* GLOW TEXT */
 h1 {
     font-size: 3rem;
+    margin: 10px 0;
     animation: glow 2s infinite alternate;
 }
 
@@ -182,9 +188,8 @@ function fadeAudio(targetVolume) {
 /* --- TAB VISIBILITY LOGIC --- */
 document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "hidden") {
-        fadeAudio(0); // Fade out when they leave
+        fadeAudio(0);
     } else {
-        // Only fade back in if they aren't manually muted and already entered
         if (enter.style.display === "none" && !isMuted) {
             fadeAudio(1);
         }
