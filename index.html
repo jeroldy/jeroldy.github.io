@@ -14,6 +14,7 @@ body {
     background-color: black;
 }
 
+/* Background video */
 video {
     position: fixed;
     width: 100%;
@@ -22,6 +23,7 @@ video {
     z-index: -2;
 }
 
+/* Dark overlay */
 .overlay {
     position: fixed;
     width: 100%;
@@ -30,6 +32,7 @@ video {
     z-index: -1;
 }
 
+/* ENTER SCREEN - DARK MASK + BLUR */
 #enter {
     position: fixed;
     width: 100%;
@@ -49,23 +52,23 @@ video {
     transition: opacity 0.8s ease, backdrop-filter 0.8s ease;
 }
 
-/* Added perspective for a better 3D effect */
+/* MAIN CONTAINER (WITH PERSPECTIVE FOR 3D TILT) */
 .wrapper {
     position: fixed;
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: center;
+    justify(content): center;
     align-items: center;
-    perspective: 1000px; 
+    perspective: 1000px;
 }
 
 .container {
     text-align: center;
-    /* Removed the CSS transition on transform to let JS handle it smoothly */
-    will-change: transform; 
+    will-change: transform;
 }
 
+/* GLOW TEXT */
 h1 {
     font-size: 3rem;
     animation: glow 2s infinite alternate;
@@ -76,12 +79,14 @@ h1 {
     to { text-shadow: 0 0 30px white, 0 0 60px white; }
 }
 
+/* PROFILE */
 img {
     width: 120px;
     border-radius: 50%;
     margin-bottom: 10px;
 }
 
+/* LINKS */
 .links a {
     display: block;
     margin: 10px auto;
@@ -99,6 +104,7 @@ img {
     transform: scale(1.05);
 }
 
+/* MUTE BUTTON */
 #muteBtn {
     position: fixed;
     top: 15px;
@@ -154,7 +160,7 @@ const container = document.getElementById("main");
 let fadeInterval;
 let isMuted = false;
 
-/* AUDIO FADE LOGIC */
+/* --- AUDIO FADE LOGIC --- */
 function fadeAudio(targetVolume) {
     clearInterval(fadeInterval);
     const step = 0.05;
@@ -173,15 +179,30 @@ function fadeAudio(targetVolume) {
     }, speed);
 }
 
+/* --- TAB VISIBILITY LOGIC --- */
+document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") {
+        fadeAudio(0); // Fade out when they leave
+    } else {
+        // Only fade back in if they aren't manually muted and already entered
+        if (enter.style.display === "none" && !isMuted) {
+            fadeAudio(1);
+        }
+    }
+});
+
+/* --- ENTER SCREEN LOGIC --- */
 enter.addEventListener("click", () => {
     enter.style.opacity = "0";
     enter.style.backdropFilter = "blur(0px)";
     setTimeout(() => { enter.style.display = "none"; }, 800);
+    
     music.volume = 0;
     music.play();
     fadeAudio(1);
 });
 
+/* --- MUTE TOGGLE --- */
 muteBtn.addEventListener("click", () => {
     isMuted = !isMuted;
     if (isMuted) {
@@ -193,7 +214,7 @@ muteBtn.addEventListener("click", () => {
     }
 });
 
-/* TYPING EFFECT */
+/* --- TYPING EFFECT --- */
 const text = "jeroldy";
 let i = 0;
 function type() {
@@ -205,33 +226,21 @@ function type() {
 }
 type();
 
-/* --- NEW SMOOTH PARALLAX LOGIC --- */
-let targetX = 0;
-let targetY = 0;
-let currentX = 0;
-let currentY = 0;
-const friction = 0.08; // LOWER = Smoother/Slower (Try 0.05 to 0.1)
+/* --- SMOOTH PARALLAX (LERP) --- */
+let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+const friction = 0.08; 
 
 document.addEventListener("mousemove", (e) => {
-    // Calculate the target rotation based on mouse position
     targetX = (window.innerWidth / 2 - e.clientX) / 20;
     targetY = (window.innerHeight / 2 - e.clientY) / 20;
 });
 
 function animateParallax() {
-    // Linear Interpolation (Lerp) formula:
-    // current = current + (target - current) * friction
     currentX += (targetX - currentX) * friction;
     currentY += (targetY - currentY) * friction;
-
-    // Apply the transformation
     container.style.transform = `rotateY(${currentX}deg) rotateX(${currentY}deg)`;
-
-    // Keep the loop running
     requestAnimationFrame(animateParallax);
 }
-
-// Start the animation loop
 animateParallax();
 </script>
 
